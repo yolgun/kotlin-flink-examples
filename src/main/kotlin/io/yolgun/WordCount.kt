@@ -28,8 +28,9 @@ fun main(args: Array<String>) {
     val env = streamExecutionEnvironmentRemote()
     env.config.globalJobParameters = params
 
-    val input = params["input"] ?: "src\\main\\resources\\sample.text"
-    val inputFullPath = "file:///${File(input).absolutePath}"
+    val input = params["input"] ?:
+            """C:\Users\yoldeta\Desktop\sandbox\kotlinflinkexamples\src\main\resources\sample.text"""
+    val inputFullPath = "file:///$input"
     val text = env.readTextFile(inputFullPath)
 
     text.flatMap(Tokenizer)
@@ -48,7 +49,7 @@ private fun streamExecutionEnvironmentRemote(): StreamExecutionEnvironment {
     return StreamExecutionEnvironment.createRemoteEnvironment(
             "127.0.0.1",
             6123,
-            "target\\kotlin-flink-examples-1.0-SNAPSHOT.jar"
+            """C:\Users\yoldeta\Desktop\sandbox\kotlinflinkexamples\target\kotlin-flink-examples-1.0-SNAPSHOT-jar-with-dependencies.jar"""
     )
 }
 
