@@ -25,7 +25,7 @@ import java.io.File
  */
 fun main(args: Array<String>) {
     val params = ParameterTool.fromArgs(args)
-    val env = StreamExecutionEnvironment.getExecutionEnvironment()
+    val env = streamExecutionEnvironmentRemote()
     env.config.globalJobParameters = params
 
     val input = params["input"] ?: "src\\main\\resources\\sample.text"
@@ -40,12 +40,27 @@ fun main(args: Array<String>) {
     env.execute("Streaming WordCount")
 }
 
+private fun streamExecutionEnvironment(): StreamExecutionEnvironment {
+    return StreamExecutionEnvironment.getExecutionEnvironment()
+}
+
+private fun streamExecutionEnvironmentRemote(): StreamExecutionEnvironment {
+    return StreamExecutionEnvironment.createRemoteEnvironment(
+            "127.0.0.1",
+            6123,
+            "target\\kotlin-flink-examples-1.0-SNAPSHOT.jar"
+    )
+}
+
 object Tokenizer : FlatMapFunction<String, Tuple2<String, Int>> {
     override fun flatMap(value: String, out: Collector<Tuple2<String, Int>>) {
         value.split("\\W+".toRegex())
                 .asSequence()
                 .filter { it.isNotEmpty() }
-                .map { it.toLowerCase() }
+                .map {
+                    Thread.sleep(1000)
+                    it.toLowerCase()
+                }
                 .forEach { out.collect(Tuple2(it, 1)) }
     }
 }
