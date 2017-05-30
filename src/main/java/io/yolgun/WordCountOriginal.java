@@ -25,7 +25,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
 /**
- * Implements the "WordCount" program that computes a simple word occurrence
+ * Implements the "WordCountOriginal" program that computes a simple word occurrence
  * histogram over text files in a streaming fashion.
  *
  * <p>The input is a plain text file with lines separated by newline characters.
@@ -37,7 +37,7 @@ import org.apache.flink.util.Collector;
  * <li>write and use user-defined functions.
  * </ul>
  */
-public class WordCount {
+public class WordCountOriginal {
 
   // *************************************************************************
   // PROGRAM
@@ -76,7 +76,7 @@ public class WordCount {
     }
 
     // execute program
-    env.execute("Streaming WordCount");
+    env.execute("Streaming WordCountOriginal");
   }
 
   // *************************************************************************
@@ -104,7 +104,7 @@ public class WordCount {
       // emit the pairs
       for (String token : tokens) {
         if (token.length() > 0) {
-          out.collect(new Tuple2<String, Integer>(token, 1));
+          out.collect(new Tuple2<>(token, 1));
         }
       }
     }

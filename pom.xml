@@ -66,7 +66,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -100,7 +100,7 @@
                     <!-- MainClass in mainfest make a executable jar -->
                     <archive>
                         <manifest>
-                            <mainClass>io.yolgun.WordCountKt</mainClass>
+                            <mainClass>io.yolgun.WordCountWithObjectKt</mainClass>
                         </manifest>
                     </archive>
 
