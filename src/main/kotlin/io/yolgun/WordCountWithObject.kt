@@ -23,14 +23,14 @@ fun main(args: Array<String>) {
     val text = env.readTextFile(inputFullPath)
 
     text.flatMap(Tokenizer)
-            .keyBy("word")
-            .sum("count")
+            .keyBy(0)
+            .sum(1)
             .print()
 
     env.execute("Streaming WordCountOriginal")
 }
 
-//data class WordCount(val word: String, val count: Int)
+//data class WordCount(var word: String, var count: Int)
 
 private fun streamExecutionEnvironment(): StreamExecutionEnvironment {
     return StreamExecutionEnvironment.getExecutionEnvironment()
